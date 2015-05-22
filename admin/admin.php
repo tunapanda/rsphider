@@ -218,19 +218,26 @@
 
     //  check whether ZIP function is available
     if (!function_exists('gzopen')) {
-        echo "<br />
-                <div class='cntr warnadmin sml'>
-                    <br />
-                    <strong>Attention:</strong>  Sphider-plus does not work with your current PHP installation.
-                    <br />
-                    <br />
-                    An installed ZIP library (zlib) as part of the PHP environment is obligatory required.
-                    <br /><br />
-                    Currently gzopen(\$file) does not work.<br />
-                    <br /><br />
-                </div>
-            ";
-        die ;
+ 	if (function_exists('gzopen64')) {
+	    function gzopen($filename , $mode = 'r', $use_include_path = 0 ) {
+		return gzopen64($filename , $mode, $use_include_path);
+	    }
+	} 
+        else {
+		echo "<br />
+			<div class='cntr warnadmin sml'>
+			    <br />
+			    <strong>Attention:</strong>  Sphider-plus does not work with your current PHP installation.
+			    <br />
+			    <br />
+			    An installed ZIP library (zlib) as part of the PHP environment is obligatory required.
+			    <br /><br />
+			    Currently gzopen(\$file) does not work.<br />
+			    <br /><br />
+			</div>
+		    ";
+		die ;
+	}
     }
 
     //      get active database for Suggest URL User and look for new suggested URLs
